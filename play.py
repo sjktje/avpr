@@ -19,11 +19,7 @@ LOGFILE = '~/Code/avpr/play.log'
 def play_loop(filename):
     """Loop video file
 
-    :param filename: TODO
-    :returns: TODO
-
-    :raises:
-        FileNotFoundError if filename does not exist
+    :param filename: file to loop
     """
 
     filename = os.path.expanduser(filename)
