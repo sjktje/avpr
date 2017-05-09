@@ -32,7 +32,7 @@ def play_loop(filename):
         print("Could not open {}".format(filename))
         sys.exit(1)
 
-    command = ("omxplayer "
+    command = ("./omxplayer "
                "-o hdmi "
                "--loop "
                "--no-osd "
