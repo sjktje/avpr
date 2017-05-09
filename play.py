@@ -33,7 +33,8 @@ def play_loop(filename):
         sys.exit(1)
 
     if not os.path.isfile(filename):
-        raise IOError("Could not open {}".format(filename))
+        print("Could not open {}".format(filename))
+        sys.exit(1)
 
     command = ("omxplayer "
                "-o hdmi "
