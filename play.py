@@ -86,12 +86,41 @@ def write_pid(pid, filename):
         exit(1)
 
 
+def read_pid(filename):
+    """Read pid from file
+
+    :param filename: file containing pid
+    :returns: pid
+    :raises IOError: if pid file couldn't be opened
+
+    """
+    pidfile = os.path.expanduser(filename)
+
+    try:
+        with open(pidfile, 'r') as f:
+            return f.readline()
+    except IOError as e:
+        print("Could not open pidfile {}: {} ({})".format(pidfile,
+            e.strerror, e.errno))
+        raise
+
+
+def kill_playback():
+    """Kill playback
+    :returns: TODO
+
+    """
+    print("Killing playback")
+
+
 def parse_args(args):
     parser = argparse.ArgumentParser(description='Loop play video files.')
 
     parser.add_argument('file', nargs='?', help='file to loop')
     parser.add_argument('--version', '-v', action='version',
                         version='%(prog)s 0.0.1')
+    parser.add_argument('--kill', '-k', action='store_true', 
+            help='kill video playback')
 
     return parser.parse_args()
 
@@ -99,13 +128,16 @@ def parse_args(args):
 def main():
     args = parse_args(sys.argv[1:])
 
+    if args.kill:
+        kill_playback()
+        sys.exit(0)
+
     if not args.file:
         print("You need to tell me what to play.")
         sys.exit(1)
 
     play_loop(args.file)
-def main():
-    play_loop("test/instagramloop_avp_3.mp4")
+
 
 if __name__ == "__main__":
     main()
