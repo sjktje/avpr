@@ -1,8 +1,10 @@
 *.egg-info/
+*.swp
 .cache/
 .eggs/
 build/
 dist/
+play.egg-info
 play.log
 play.pid
 test/
