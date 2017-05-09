@@ -27,6 +27,10 @@ def play_loop(filename):
     """
 
     filename = os.path.expanduser(filename)
+    try:
+        log = open_log(LOGFILE)
+    except IOError:
+        sys.exit(1)
 
     if not os.path.isfile(filename):
         raise IOError("Could not open {}".format(filename))
@@ -38,9 +42,26 @@ def play_loop(filename):
                "--no-keys "
                "{}".format(filename))
 
-    p = subprocess.Popen(shlex.split(command))
+    p = subprocess.Popen(shlex.split(command), shell=False, stderr=log,
+                         stdout=log)
 
     print("Pid: {}".format(p.pid))
+
+
+def open_log(filename):
+    """Open log file.
+
+    :param filename: file to append log to
+    :returns: file handle
+    :raises: IOError if file couldn't be opened
+    """
+
+    logfile = os.path.expanduser(filename)
+    try:
+        return open(logfile, 'a')
+    except IOError as e:
+        print("Could not open {}: {} ({})".format(logfile, e.strerror, e.errno))
+        raise
 
 
 def parse_args(args):
