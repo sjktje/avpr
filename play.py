@@ -4,7 +4,6 @@
 import argparse
 import os
 import shlex
-import sys
 
 # subprocess32 is a backport of python3's subprocess module. It fixes
 # some bugs and adds some features. This requires python-dev to be
@@ -14,6 +13,7 @@ if os.name == 'posix' and sys.version_info[0] < 3:
 else:
     import subprocess
 
+import sys
 
 LOGFILE = '~/Code/avpr/play.log'
 PIDFILE = '~/Code/avpr/play.pid'
