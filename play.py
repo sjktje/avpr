@@ -6,7 +6,8 @@ import shlex
 import sys
 
 # subprocess32 is a backport of python3's subprocess module. It fixes
-# some bugs and adds some features.
+# some bugs and adds some features. This requires python-dev to be
+# installed.
 if os.name == 'posix' and sys.version_info[0] < 3:
     import subprocess32 as subprocess
 else:
@@ -42,7 +43,7 @@ def play_loop(filename):
 
 
 def main():
-    play_loop("instagramloop_avp_3.mp4")
+    play_loop("test/instagramloop_avp_3.mp4")
 
 if __name__ == "__main__":
     main()
