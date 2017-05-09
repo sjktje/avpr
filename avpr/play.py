@@ -10,6 +10,8 @@ import sys
 from .logger import create_logger
 from .utils import run_cmd
 
+__version__ = '0.0.1'
+
 LOGFILE = '~/Code/avpr/play.log'
 PIDFILE = '~/Code/avpr/play.pid'
 
@@ -123,7 +125,7 @@ def parse_args(args):
 
     parser.add_argument('file', nargs='?', help='file to loop')
     parser.add_argument('--version', '-v', action='version',
-                        version='%(prog)s 0.0.1')
+                        version='%(prog)s {}'.format(__version__))
     parser.add_argument('--kill', '-k', action='store_true', 
             help='kill video playback')
 
