@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import argparse
 import os
 import shlex
 import sys
@@ -42,6 +43,24 @@ def play_loop(filename):
     print("Pid: {}".format(p.pid))
 
 
+def parse_args(args):
+    parser = argparse.ArgumentParser(description='Loop play video files.')
+
+    parser.add_argument('file', nargs='?', help='file to loop')
+    parser.add_argument('--version', '-v', action='version',
+                        version='%(prog)s 0.0.1')
+
+    return parser.parse_args()
+
+
+def main():
+    args = parse_args(sys.argv[1:])
+
+    if not args.file:
+        print("You need to tell me what to play.")
+        sys.exit(1)
+
+    play_loop(args.file)
 def main():
     play_loop("test/instagramloop_avp_3.mp4")
 
