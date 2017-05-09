@@ -14,7 +14,10 @@ if os.name == 'posix' and sys.version_info[0] < 3:
 else:
     import subprocess
 
+
 LOGFILE = '~/Code/avpr/play.log'
+PIDFILE = '~/Code/avpr/play.pid'
+
 
 def play_loop(filename):
     """Loop video file
@@ -42,7 +45,7 @@ def play_loop(filename):
     p = subprocess.Popen(shlex.split(command), shell=False, stderr=log,
                          stdout=log)
 
-    print("Pid: {}".format(p.pid))
+    write_pid(p.pid, PIDFILE)
 
 
 def open_log(filename):
@@ -50,7 +53,7 @@ def open_log(filename):
 
     :param filename: file to append log to
     :returns: file handle
-    :raises: IOError if file couldn't be opened
+    :raises IOError: if file couldn't be opened
     """
 
     logfile = os.path.expanduser(filename)
@@ -59,6 +62,28 @@ def open_log(filename):
     except IOError as e:
         print("Could not open {}: {} ({})".format(logfile, e.strerror, e.errno))
         raise
+
+
+def write_pid(pid, filename):
+    """Write pid to file
+
+    This function will exit(1) unless the pid file was written.
+
+    :param pid: pid number to write
+    :param filename: path to and name of file to write to. Expands ~.
+    :returns: nothing
+
+    """
+    pidfile = os.path.expanduser(filename)
+
+    try:
+        with open(pidfile, 'w') as f:
+            f.write(str(pid))
+
+    except IOError as e:
+        print("Could not open pidfile {}: {} ({})".format(logfile,
+            e.strerror, e.errno))
+        exit(1)
 
 
 def parse_args(args):
