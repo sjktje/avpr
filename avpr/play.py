@@ -4,6 +4,7 @@
 import argparse
 import logging
 import os
+import signal
 import sys
 
 from .logger import create_logger
@@ -93,10 +94,28 @@ def read_pid(filename):
 
 def kill_playback():
     """Kill playback
-    :returns: TODO
+
+    :returns: nothing
 
     """
-    print("Killing playback")
+
+    pidfile = os.path.expanduser(PIDFILE)
+
+    try:
+        with open(pidfile, 'r') as f:
+            os.kill(int(f.readline()), signal.SIGTERM)
+    except IOError as e:
+        logger.debug(
+            ('Could not open pid file {}: {} ({}) -- '
+             'perhaps there is no player running?'
+             ).format(pidfile, e.strerror, e.errno))
+
+    except OSError as e:
+        logger.debug('Could not kill playback: {} ({})'.format(e.strerror,
+            e.errno))
+    else:
+        os.remove(pidfile)
+
 
 
 def parse_args(args):
