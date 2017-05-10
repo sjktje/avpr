@@ -27,3 +27,7 @@ def test_read_pid(tmpdir):
     pid = read_pid(pidfile.strpath)
     assert pid == '1234'
 
+
+def test_read_pid_raises_ioerror():
+    with pytest.raises(IOError):
+        read_pid('nonexistent_file_name.pid')
