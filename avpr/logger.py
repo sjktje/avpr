@@ -23,7 +23,8 @@ def create_logger(name, logfile, level):
     fh.setLevel(level)
 
     formatter = logging.Formatter(
-        '%(asctime)s - %(name)s - %(levelname)s - %(message)s'
+        fmt='%(asctime)s - %(name)s - %(levelname)s - %(message)s',
+        datefmt='%Y-%m-%d %H:%M:%S'
     )
 
     fh.setFormatter(formatter)
