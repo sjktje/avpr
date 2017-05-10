@@ -2,6 +2,7 @@
 # -*- coding: utf-8 -*-
 
 import argparse
+import logging
 import os
 import shlex
 import sys
@@ -14,9 +15,12 @@ if os.name == 'posix' and sys.version_info[0] < 3:
 else:
     import subprocess
 
+from .logger import create_logger
 
 LOGFILE = '~/Code/avpr/play.log'
 PIDFILE = '~/Code/avpr/play.pid'
+
+logger = logging.getLogger('play')
 
 def play_loop(filename):
     """Loop video file
@@ -24,14 +28,9 @@ def play_loop(filename):
     :param filename: file to loop
     """
 
-    filename = os.path.expanduser(filename)
-    try:
-        log = open_log(LOGFILE)
-    except IOError:
-        sys.exit(1)
 
     if not os.path.isfile(filename):
-        print("Could not open {}".format(filename))
+        logger.critical('Could not open {}'.format(filename))
         sys.exit(1)
 
     command = ("./omxplayer "
@@ -41,8 +40,10 @@ def play_loop(filename):
                "--no-keys "
                "{}".format(filename))
 
-    p = subprocess.Popen(shlex.split(command), shell=False, stderr=log,
-                         stdout=log)
+    logger.info('Looping playback of {}'.format(filename))
+    logger.debug(command)
+
+    p = subprocess.Popen(shlex.split(command), shell=False, stderr=None, stdout=None)
 
     write_pid(p.pid, PIDFILE)
 
@@ -99,8 +100,8 @@ def read_pid(filename):
         with open(pidfile, 'r') as f:
             return f.readline()
     except IOError as e:
-        print("Could not open pidfile {}: {} ({})".format(pidfile,
-            e.strerror, e.errno))
+        logger.critical('Could not open pid file {}: {} ({})'.format(
+            pidfile, e.strerror, e.errno))
         raise
 
 
@@ -127,6 +128,8 @@ def parse_args(args):
 def main():
     args = parse_args(sys.argv[1:])
 
+    create_logger('play', LOGFILE, logging.DEBUG)
+
     if args.kill:
         kill_playback()
         sys.exit(0)
@@ -134,5 +137,6 @@ def main():
     if not args.file:
         print("You need to tell me what to play.")
         sys.exit(1)
+
 
     play_loop(args.file)
