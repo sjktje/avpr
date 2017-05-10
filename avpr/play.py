@@ -129,7 +129,7 @@ def parse_args(args):
     parser.add_argument('--kill', '-k', action='store_true', 
             help='kill video playback')
 
-    return parser.parse_args()
+    return parser.parse_args(args)
 
 
 def main():
