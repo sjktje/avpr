@@ -7,4 +7,7 @@ from avpr.play import main, parse_args
 
 def test_parse_args_kill():
     args = parse_args(['--kill'])
-    assert args.kill is True
+    assert args.kill
+
+    args = parse_args(['-k'])
+    assert args.kill
