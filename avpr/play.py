@@ -4,18 +4,10 @@
 import argparse
 import logging
 import os
-import shlex
 import sys
 
-# subprocess32 is a backport of python3's subprocess module. It fixes
-# some bugs and adds some features. This requires python-dev to be
-# installed.
-if os.name == 'posix' and sys.version_info[0] < 3:
-    import subprocess32 as subprocess
-else:
-    import subprocess
-
 from .logger import create_logger
+from .utils import run_cmd
 
 LOGFILE = '~/Code/avpr/play.log'
 PIDFILE = '~/Code/avpr/play.pid'
@@ -33,19 +25,13 @@ def play_loop(filename):
         logger.critical('Could not open {}'.format(filename))
         sys.exit(1)
 
-    command = ("./omxplayer "
-               "-o hdmi "
-               "--loop "
-               "--no-osd "
-               "--no-keys "
-               "{}".format(filename))
+    command = "./omxplayer -o hdmi --loop --no-osd --no-keys {}".format(filename)
 
     logger.info('Looping playback of {}'.format(filename))
-    logger.debug(command)
 
-    p = subprocess.Popen(shlex.split(command), shell=False, stderr=None, stdout=None)
+    pid = run_cmd(command)
 
-    write_pid(p.pid, PIDFILE)
+    write_pid(pid, PIDFILE)
 
 
 def open_log(filename):
