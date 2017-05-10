@@ -13,6 +13,7 @@ setup(
     description = 'Play and loop a video file.',
     author = u'Svante Kvarnström',
     author_email = 'sjk@sjk.io',
-    setup_requires=['pytest-runner', 'subprocess32'],
+    setup_requires=['pytest-runner'],
     tests_require=['pytest'],
+    install_requires=['subprocess32']
 )
