@@ -9,8 +9,7 @@ import sys
 
 from .logger import create_logger, map_loglevel
 from .utils import create_dir, run_cmd
-
-__version__ = '0.0.1'
+from . import __version__
 
 AVPRDIR = os.path.expanduser(os.path.join('~', '.avpr'))
 LOGFILE = os.path.join(AVPRDIR, 'play.log')
