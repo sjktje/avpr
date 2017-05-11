@@ -30,3 +30,19 @@ def create_logger(name, logfile, level):
     fh.setFormatter(formatter)
 
     logger.addHandler(fh)
+
+
+def map_loglevel(verbosity_count):
+    """Map --verbosity/-v count to proper logging level.
+
+    Currently, only INFO (no -v flag) and DEBUG (any amount of -v flags) are
+    supported.
+
+    :param verbosity_count: count from parse_args()
+    :returns: logging level object
+
+    """
+    if verbosity_count == 0:
+        return logging.INFO
+    else:
+        return logging.DEBUG
