@@ -116,6 +116,7 @@ def kill_playback():
         logger.debug('Could not kill playback: {} ({})'.format(e.strerror,
             e.errno))
     else:
+        logger.info('Killed playback')
         os.remove(pidfile)
 
 
