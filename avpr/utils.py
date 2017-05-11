@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # -*- coding: utf-8 -*-
 
+import errno
 import logging
 import os
 import shlex
@@ -35,3 +36,20 @@ def run_cmd(cmd):
             stderr=subprocess.STDOUT,
             stdout=DEVNULL
         ).pid
+
+
+def create_dir(dir):
+    """Create directory if it does not already exist
+
+    Will silently fail if directory already exists.
+
+    :param dir: directory to create
+    :raises OSError: if directory couldn't be created.
+    :returns: nothing
+
+    """
+    try:
+        os.makedirs(dir)
+    except OSError as e:
+        if e.errno != errno.EEXIST:
+            raise
