@@ -149,5 +149,4 @@ def main():
         print("You need to tell me what to play.")
         sys.exit(1)
 
-
     play_loop(args.file)
