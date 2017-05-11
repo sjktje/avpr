@@ -13,6 +13,14 @@ def test_parse_args_kill():
     assert args.kill
 
 
+def test_parse_args_verbosity():
+    args = parse_args(['--verbosity', '--verbosity'])
+    assert args.verbosity == 2
+    
+    args = parse_args(['-v', '-v'])
+    assert args.verbosity == 2
+
+
 def test_write_pid_to_file(tmpdir):
     file = tmpdir.join('play.pid')
     write_pid(1234, file.strpath)
