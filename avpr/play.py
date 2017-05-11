@@ -148,7 +148,8 @@ def main():
         sys.exit(0)
 
     if not args.file:
-        print("You need to tell me what to play.")
+        print(('You need to tell me what to play. '
+               'See {} -h for help.').format(os.path.basename(sys.argv[0])))
         sys.exit(1)
 
     play_loop(args.file)
