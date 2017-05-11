@@ -33,7 +33,7 @@ setup(
         "console_scripts": ['avprplay = avpr.play:main']
         },
     version = get_version(),
-    description = 'Play and loop a video file.',
+    description = 'Collection of scripts for the AVPR project.',
     author = u'Svante Kvarnström',
     author_email = 'sjk@sjk.io',
     setup_requires=['pytest-runner'],
