@@ -8,12 +8,13 @@ import signal
 import sys
 
 from .logger import create_logger, map_loglevel
-from .utils import run_cmd
+from .utils import create_dir, run_cmd
 
 __version__ = '0.0.1'
 
-LOGFILE = '~/Code/avpr/play.log'
-PIDFILE = '~/Code/avpr/play.pid'
+AVPRDIR = os.path.expanduser(os.path.join('~', '.avpr'))
+LOGFILE = os.path.join(AVPRDIR, 'play.log')
+PIDFILE = os.path.join(AVPRDIR, 'play.pid')
 
 logger = logging.getLogger('play')
 
@@ -45,7 +46,7 @@ def open_log(filename):
     :raises IOError: if file couldn't be opened
     """
 
-    logfile = os.path.expanduser(filename)
+    logfile = filename
     try:
         return open(logfile, 'a')
     except IOError as e:
@@ -63,7 +64,7 @@ def write_pid(pid, filename):
     :returns: nothing
 
     """
-    pidfile = os.path.expanduser(filename)
+    pidfile = filename
 
     try:
         with open(pidfile, 'w') as f:
@@ -83,7 +84,7 @@ def read_pid(filename):
     :raises IOError: if pid file couldn't be opened
 
     """
-    pidfile = os.path.expanduser(filename)
+    pidfile = filename
 
     try:
         with open(pidfile, 'r') as f:
@@ -101,7 +102,7 @@ def kill_playback():
 
     """
 
-    pidfile = os.path.expanduser(PIDFILE)
+    pidfile = PIDFILE
 
     try:
         with open(pidfile, 'r') as f:
@@ -138,6 +139,8 @@ def parse_args(args):
 
 def main():
     args = parse_args(sys.argv[1:])
+
+    create_dir(AVPRDIR)
 
     create_logger('play', LOGFILE, map_loglevel(args.verbosity))
 
