@@ -27,10 +27,10 @@ def get_version():
 
 
 setup(
-    name = "play",
+    name = "avpr",
     packages = ["avpr"],
     entry_points = {
-        "console_scripts": ['play = avpr.play:main']
+        "console_scripts": ['avprplay = avpr.play:main']
         },
     version = get_version(),
     description = 'Play and loop a video file.',
