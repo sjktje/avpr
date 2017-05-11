@@ -105,7 +105,8 @@ def kill_playback():
 
     try:
         with open(pidfile, 'r') as f:
-            os.kill(int(f.readline()), signal.SIGTERM)
+            pid = int(f.readline())
+            os.kill(pid, signal.SIGTERM)
     except IOError as e:
         logger.debug(
             ('Could not open pid file {}: {} ({}) -- '
@@ -116,7 +117,7 @@ def kill_playback():
         logger.debug('Could not kill playback: {} ({})'.format(e.strerror,
             e.errno))
     else:
-        logger.info('Killed playback')
+        logger.info('Killed playback (pid {})'.format(str(pid)))
         os.remove(pidfile)
 
 
