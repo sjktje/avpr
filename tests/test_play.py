@@ -16,7 +16,7 @@ def test_parse_args_kill():
 def test_parse_args_verbosity():
     args = parse_args(['--verbosity', '--verbosity'])
     assert args.verbosity == 2
-    
+
     args = parse_args(['-v', '-v'])
     assert args.verbosity == 2
 
