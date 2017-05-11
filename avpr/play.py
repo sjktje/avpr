@@ -7,7 +7,7 @@ import os
 import signal
 import sys
 
-from .logger import create_logger
+from .logger import create_logger, map_loglevel
 from .utils import run_cmd
 
 __version__ = '0.0.1'
@@ -139,7 +139,7 @@ def parse_args(args):
 def main():
     args = parse_args(sys.argv[1:])
 
-    create_logger('play', LOGFILE, logging.DEBUG)
+    create_logger('play', LOGFILE, map_loglevel(args.verbosity))
 
     if args.kill:
         kill_playback()
