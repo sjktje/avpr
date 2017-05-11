@@ -128,8 +128,10 @@ def parse_args(args):
     parser.add_argument('file', nargs='?', help='file to loop')
     parser.add_argument('--version', '-V', action='version',
                         version='%(prog)s {}'.format(__version__))
-    parser.add_argument('--kill', '-k', action='store_true', 
-            help='kill video playback')
+    parser.add_argument('--kill', '-k', action='store_true',
+                        help='kill video playback')
+    parser.add_argument('--verbosity', '-v', action='count',
+                        help='increase log verbosity.')
 
     return parser.parse_args(args)
 
