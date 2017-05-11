@@ -126,7 +126,7 @@ def parse_args(args):
     parser = argparse.ArgumentParser(description='Loop play video files.')
 
     parser.add_argument('file', nargs='?', help='file to loop')
-    parser.add_argument('--version', '-v', action='version',
+    parser.add_argument('--version', '-V', action='version',
                         version='%(prog)s {}'.format(__version__))
     parser.add_argument('--kill', '-k', action='store_true', 
             help='kill video playback')
