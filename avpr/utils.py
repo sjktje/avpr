@@ -34,7 +34,8 @@ def run_cmd(cmd):
             shlex.split(cmd),
             shell=False,
             stderr=subprocess.STDOUT,
-            stdout=DEVNULL
+            stdout=DEVNULL,
+            preexec_fn=os.setsid 
         ).pid
 
 
