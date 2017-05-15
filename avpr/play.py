@@ -28,7 +28,7 @@ def play_loop(filename):
         logger.critical('Could not open {}'.format(filename))
         sys.exit(1)
 
-    command = "omxplayer -o hdmi --loop --no-osd --no-keys {}".format(filename)
+    command = "omxplayer -o hdmi --loop --no-osd --no-keys --aspect-mode fill {}".format(filename)
 
     logger.info('Looping playback of {}'.format(filename))
 
